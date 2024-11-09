@@ -1,0 +1,392 @@
+  /* Basic Reset */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Dark Mode Toggle */
+:root {
+    --primary-color: #007bff;
+    --accent-color: #ff6347;
+    --bg-color: #f4f4f4;
+    --text-color: #333;
+    --card-bg: #fff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --register-btn-color: #20c997;
+}
+
+body.dark-mode {
+    --bg-color: #121212;
+    --text-color: #f4f4f4;
+    --card-bg: #1e1e1e;
+    --shadow-color: rgba(255, 255, 255, 0.1);
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    transition: background-color 0.5s ease;
+    background-image: url('background-illustration.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+/* Container Styles */
+.container {
+    background-color: var(--card-bg);
+    padding: 50px;
+    border-radius: 12px;
+    box-shadow: 0px 6px 12px var(--shadow-color);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    animation: containerAnimation 1s ease-in-out;
+}
+
+@keyframes containerAnimation {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Heading */
+.heading {
+    font-size: 36px;
+    font-weight: bold;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+    transition: all 0.5s ease;
+    cursor: pointer;
+    animation: headingAnimation 1s ease-out;
+    position: relative;
+}
+
+@keyframes headingAnimation {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(20px) scale(1.1);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+.heading:hover {
+    color: #fff;
+    background-color: var(--primary-color);
+    padding: 15px;
+    border-radius: 10px;
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.heading:active {
+    transform: rotate(360deg);
+}
+
+/* Dark Mode Toggle */
+.dark-mode-switch {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.dark-mode-switch:hover {
+    color: var(--primary-color);
+}
+
+/* Floating Labels */
+.floating-label {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+    animation: floatLabel 1.2s ease-in-out;
+}
+
+@keyframes floatLabel {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.floating-label input {
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 18px;
+    width: 100%;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background: none;
+    text-align: left;
+    animation: inputFocus 0.5s ease;
+}
+
+@keyframes inputFocus {
+    from {
+        border-color: #ddd;
+    }
+    to {
+        border-color: var(--primary-color);
+    }
+}
+
+.floating-label label {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    transition: all 0.3s ease;
+    font-size: 18px;
+    color: #888;
+}
+
+/* Dark Mode Input Fields */
+body.dark-mode .floating-label input {
+    border-color: #555;
+    color: var(--text-color);
+}
+
+body.dark-mode .floating-label label {
+    color: #aaa;
+}
+
+.floating-label input:focus + label,
+.floating-label input:not(:placeholder-shown) + label {
+    top: 10px;
+    font-size: 12px;
+    color: var(--accent-color);
+}
+
+/* Button Styles */
+.login-btn, .social-btn {
+    padding: 15px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 20px;
+    width: 100%;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    animation: buttonPopIn 0.8s ease-out;
+}
+
+@keyframes buttonPopIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.login-btn:hover, .social-btn:hover {
+    transform: scale(1.05);
+    background-color: var(--primary-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.login-btn:active, .social-btn:active, .register-btn:active {
+    transform: scale(1.15); /* Zoom effect on click */
+}
+
+/* Register Button */
+.register-btn {
+    padding: 8px 12px;
+    background-color: var(--register-btn-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.register-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Progress Indicator */
+.progress-indicator {
+    width: 0%;
+    height: 4px;
+    background-color: var(--primary-color);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: width 0.5s ease;
+}
+
+/* Social Login */
+.social-login {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    align-items: center;
+    animation: fadeInUp 1.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.social-btn {
+    width: 48%;
+    background-color: #3b5998;
+    animation: socialBtnAnimation 0.8s ease-out;
+}
+
+@keyframes socialBtnAnimation {
+    0% {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.social-btn.google {
+    background-color: #db4437;
+}
+
+/* OR Text */
+.or-text {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--text-color);
+    margin: 0 10px;
+    animation: fadeIn 1.2s ease-out;
+}
+
+/* Register Wrapper */
+.register-wrapper {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 10px; /* Adjusted space between text and button */
+}
+
+/* Forgot Password Link */
+.forgot-password {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.forgot-password a {
+    color: var(--primary-color);
+    font-size: 14px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.forgot-password a:hover {
+    color: var(--accent-color);
+}
+
+/* Blinking Success Message */
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.success-message {
+    display: none;
+    color: #28a745;
+    margin-top: 20px;
+    font-size: 18px;
+    animation: blink 1s infinite;
+}
+
+/* Password Eye Icon Center */
+.password-field {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+.toggle-password:hover {
+    transform: translateY(-50%) scale(1.2);
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+    .container {
+        padding: 30px;
+    }
+
+    .heading {
+        font-size: 28px;
+    }
+
+    .login-btn, .social-btn, .register-btn {
+        font-size: 18px;
+    }
+
+    .register-wrapper {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .register-wrapper p {
+        margin-bottom: 10px;
+    }
+
+    .register-btn {
+        width: 100%;
+    }
+}

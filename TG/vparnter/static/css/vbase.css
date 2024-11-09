@@ -1,0 +1,311 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Navbar Styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #d11a1a;
+    padding: 20px 30px;
+    
+}
+
+.navbar-logo img {
+    width: 40px;
+    height: 40px;
+}
+
+.navbar-name {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 28px;
+    color: white;
+}
+
+.navbar nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.navbar nav ul li {
+    margin-left: 15px;
+}
+
+/* Button Styling */
+.login-btn, .nav-link {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover, .nav-link:hover {
+    background-color: #45a049;
+}
+
+/* Profile Picture Styling */
+.profile-dropdown {
+    padding: 0;
+    background-color: transparent;
+    border: none;
+}
+
+.profile-dropdown img {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    transform: translateX(0) !important; /* Reset the default position */
+    left: auto; /* Reset the left position */
+    right: 0; /* Align to the right edge of the parent */
+    min-width: 150px; /* Ensure the dropdown has enough space */
+}
+
+/* Dropdown Menu */
+.nav-item .dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    z-index: 1;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.nav-item .dropdown-menu a {
+    color: rgb(196, 25, 25);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.nav-item .dropdown-menu a:hover {
+    background-color: #f1f1f1;
+}
+
+.nav-item:hover .dropdown-menu {
+    display: block;
+}
+
+/* Sidebar styles */
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    background-color: #d11a1a;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #000000;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+/* Menu Icon */
+.menu-icon {
+    display: block;
+    font-size: 30px;
+    cursor: pointer;
+    color: white;
+}
+
+.menu-icon span {
+    display: block;
+}
+.notification-bell {
+    cursor: pointer; /* Change cursor to pointer for better UX */
+    color: white; /* Change the color to fit your design */
+    margin-right: 10px; /* Adjust margin as needed */
+}
+
+.notification-bell:hover {
+    color: #f1c40f; /* Change color on hover for visual feedback */
+}
+
+/* Media Queries */
+@media (max-width: 1024px) {
+    .navbar {
+        padding: 15px 20px;
+        width: 100%;
+        height: 60px;
+    }
+
+    .navbar-name {
+        font-size: 20px;
+    }
+
+    .nav-link {
+        padding: 8px 15px;
+    }
+
+    /* Medium Heading Size */
+    h1, h2, h3, h4, h5, h6 {
+        font-size: 1.20em; /* Adjust this size for medium heading */
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: row; /* Keep items in a row */
+        align-items: center;
+        justify-content: space-between; /* Distribute space between items */
+    }
+
+    .navbar-logo {
+        margin-right: auto; /* Push logo to the left */
+    }
+
+    .navbar-name {
+        text-align: center;
+        margin: 0; /* Center the name without extra margin */
+        font-size: 18px;
+    }
+
+    .nav-link {
+        padding: 6px 10px;
+    }
+
+    .menu-icon {
+        margin-right: auto; /* Move the menu icon to the left */
+    }
+
+    /* Medium Heading Size */
+    h1, h2, h3, h4, h5, h6 {
+        font-size: 1.20em; /* Adjust this size for medium heading */
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 10px 15px;
+        width: 100%;
+        height: 60px;
+    }
+
+    .navbar-name {
+        font-size: 16px;
+    }
+
+    .nav-link {
+        padding: 4px 8px;
+    }
+
+    /* Medium Heading Size */
+    h1, h2, h3, h4, h5, h6 {
+        font-size: 1.20em; /* Adjust this size for medium heading */
+    }
+}
+.footer {
+    background-color: #d11a1a;
+    color: white;
+    padding: 20px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-left, .footer-center, .footer-right {
+    flex: 1;
+    text-align: center;
+}
+
+.footer-left p {
+    font-size: 1em;
+}
+
+.footer-center ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-center ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+.footer-center ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 0.95em;
+}
+
+.footer-center ul li a:hover {
+    text-decoration: underline;
+}
+
+.footer-right a {
+    font-size: 1.5em;
+    color: white;
+    margin: 0 10px;
+}
+
+.footer-right a:hover {
+    color: #ddd;
+}
+
+/* Responsive Footer Layout */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-left, .footer-center, .footer-right {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+}

@@ -1,0 +1,342 @@
+
+.main-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: 80%;
+    max-width: 600px;
+    transition: box-shadow 0.3s, transform 0.3s;
+    overflow-y: auto;
+    max-height: 90vh;
+}
+
+.main-container:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+.head {
+    background: linear-gradient(135deg, #ffcc80, #ffb74d);
+    padding: 10px;
+    border-radius: 12px 12px 0 0;
+    text-align: center;
+}
+
+.head h1 {
+    font-size: 28px;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #333;
+    display: block;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.location-link {
+    color: #007bff;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: underline;
+    transition: color 0.3s;
+    display: inline-block;
+}
+
+.location-link:hover {
+    color: #0056b3;
+}
+
+.current-location {
+    font-size: 14px;
+    color: #555;
+    margin-top: 5px;
+}
+
+button {
+    padding: 12px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+.via-container {
+    margin-bottom: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.via-input {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.remove-via {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    cursor: pointer;
+    color: #dc3545;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.remove-via:hover {
+    color: #c82333;
+}
+
+.via-warning {
+    color: red;
+    font-weight: bold;
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+.add-via-button {
+    align-self: flex-end;
+    font-size: 14px;
+    padding: 8px 10px;
+    margin-top: 5px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.add-via-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.step {
+    display: none;
+}
+
+.active {
+    display: block;
+}
+
+.summary-container {
+    margin-top: 20px;
+}
+
+.summary-details {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.label {
+    font-weight: bold;
+    color: #333;
+}
+
+.info {
+    color: #555;
+}
+
+.distance-time {
+    margin-top: 10px;
+}
+
+h2 {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#map {
+    height: 300px;
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+    display: none;
+}
+
+.radio-group {
+    display: flex;
+    align-items: center;
+}
+
+.radio-group input[type="radio"] {
+    margin-right: 5px;
+}
+
+#laborCountGroup {
+    display: none;
+}
+
+#noLaborMessage {
+    display: none;
+    color: #555;
+    font-size: 14px;
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+/* Container for all vehicle items */
+.vehicle-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* Each vehicle card */
+.vehicle-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    background-color: #f9f9f9;
+    width: 100%;
+}
+
+.vehicle-item:hover {
+    transform: scale(1.02);
+    background-color: #e9e9e9;
+}
+
+/* Selected vehicle styling */
+.vehicle-item.selected {
+    border: 2px solid #28a745;
+    background-color: #dff0d8;
+}
+
+/* Container for the image */
+.image-container {
+    width: 80px; /* Smaller size */
+    height: 60px; /* Maintain aspect ratio */
+    overflow: hidden;
+    border-radius: 5px;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+}
+
+/* Image within the container */
+.image-container img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+/* Info section for each vehicle */
+.vehicle-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.vehicle-info span {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.5;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    h2 {
+        font-size: medium;
+    }
+    .vehicle-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .image-container {
+        width: 100%; /* Full width for smaller screens */
+        height: auto;
+        width: 75px; /* Smaller size */
+        height: 55px; /* Maintain aspect ratio */
+        margin-bottom: 10px;
+    }
+
+    .vehicle-info {
+        align-items: flex-start;
+    }
+    .vehicle-info span {
+        font-size: 10px;
+        color: #333;
+        line-height: 1;
+    }
+}
+
+
+@media (max-width: 600px) {
+    .main-container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .add-via-button {
+        font-size: 12px;
+        padding: 6px 8px;
+    }
+
+    .remove-via {
+        font-size: 14px;
+        top: 10px;
+    }
+}

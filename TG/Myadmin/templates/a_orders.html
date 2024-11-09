@@ -1,0 +1,157 @@
+{% extends "abase.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/a_order.css' %}">
+<div class="main">
+    <h2>Order Details</h2>
+
+    <!-- Filter and Download Excel Container -->
+    <div class="filter-container">
+        <div class="filters">
+            <label for="state">State:</label>
+            <select id="state" onchange="loadDistricts()">
+                <option value="">Select State</option>
+            </select>
+
+            <label for="district">District:</label>
+            <select id="district" disabled onchange="loadTaluks()">
+                <option value="">Select District</option>
+            </select>
+
+            <label for="taluk">Taluk:</label>
+            <select id="taluk" disabled>
+                <option value="">Select Taluk</option>
+            </select>
+
+            <label for="from-date">From Date:</label>
+            <input type="date" id="from-date">
+
+            <label for="to-date">To Date:</label>
+            <input type="date" id="to-date">
+
+            <button class="go-btn" onclick="applyFilters()">Go</button>
+        </div>
+
+        <button class="download-btn">Download Excel</button>
+    </div>
+
+    <!-- Order table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Customer ID</th>
+                <th>Driver ID</th>
+                <th>Vehicle ID</th>
+                <th>Date</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Purpose</th>
+                <th>Item Name</th>
+                <th>Load(Kg)</th>
+                <th>Load Image</th>
+                <th>Services</th>
+                <th>Distance</th>
+                <th>Status</th>
+                <th>Price</th>
+                <th>Processing Fee</th>
+                <th>PlatForm Fee</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>123</td>
+                <td>567</td>
+                <td>2024-09-15</td>
+                <td>Location A</td>
+                <td>Location B</td>
+                <td>Delivery</td>
+                <td>100 km</td>
+                <td>$150</td>
+                <td>$10</td>
+            </tr>
+            <!-- Add more order rows here -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const regionData = {
+        "Andhra Pradesh": {
+            "Anantapur": ["Taluk 1", "Taluk 2", "Taluk 3"],
+            "Chittoor": ["Taluk 1", "Taluk 2"]
+        },
+        "Karnataka": {
+            "Bangalore": ["Bangalore East", "Bangalore West"],
+            "Mysore": ["Taluk 1", "Taluk 2"]
+        },
+        // Add more states, districts, and taluks here
+    };
+
+    // Populate the state dropdown
+    const stateSelect = document.getElementById('state');
+    const districtSelect = document.getElementById('district');
+    const talukSelect = document.getElementById('taluk');
+
+    function populateStates() {
+        for (let state in regionData) {
+            let option = document.createElement('option');
+            option.value = state;
+            option.textContent = state;
+            stateSelect.appendChild(option);
+        }
+    }
+
+    // Load districts based on state selection
+    function loadDistricts() {
+        districtSelect.innerHTML = '<option value="">Select District</option>';
+        talukSelect.innerHTML = '<option value="">Select Taluk</option>';
+        talukSelect.disabled = true;
+
+        let selectedState = stateSelect.value;
+        if (selectedState) {
+            districtSelect.disabled = false;
+            for (let district in regionData[selectedState]) {
+                let option = document.createElement('option');
+                option.value = district;
+                option.textContent = district;
+                districtSelect.appendChild(option);
+            }
+        } else {
+            districtSelect.disabled = true;
+            talukSelect.disabled = true;
+        }
+    }
+
+    // Load taluks based on district selection
+    function loadTaluks() {
+        talukSelect.innerHTML = '<option value="">Select Taluk</option>';
+
+        let selectedState = stateSelect.value;
+        let selectedDistrict = districtSelect.value;
+
+        if (selectedDistrict) {
+            talukSelect.disabled = false;
+            let taluks = regionData[selectedState][selectedDistrict];
+            taluks.forEach(taluk => {
+                let option = document.createElement('option');
+                option.value = taluk;
+                option.textContent = taluk;
+                talukSelect.appendChild(option);
+            });
+        } else {
+            talukSelect.disabled = true;
+        }
+    }
+
+    // Apply filters (Placeholder functionality)
+    function applyFilters() {
+        alert("Filters applied!");
+    }
+
+    // Initialize the state dropdown on page load
+    window.onload = populateStates;
+</script>
+{% endblock content %}

@@ -1,0 +1,36 @@
+from django.urls import path
+from customer import views
+
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('distance/', views.distance_calculator, name='distance_calculator'),
+    path('list',views.list,name='list'),
+    path('details/', views.vehicle_details_view, name='vehicle_details'),
+    path('profile/', views.profile_view, name='profile'),
+    path('order-history/',views.order_history_view, name='order_history'),
+    path('feedback/<int:order_id>/',views.feedback_view, name='give_feedback'),
+    path('notifications/', views.notifications_view, name='notifications'),
+    path('signup',views.signup,name='signup'),
+    path('login',views.login,name='login'),
+    path('logout/',views.logout_view, name='logout'),
+    path('customer/profile/', views.customer_profile, name='customer_profile'),
+    path('auto_booking',views.auto_booking,name='auto_book'),
+    path('Logitics',views.logi_booking,name='logi_book'),
+    path('vision',views.vision,name='vision'),
+    path('about',views.about,name='about'),
+    path('calculate-price/', views.calculate_price, name='calculate_price'),
+    path('show-categories/', views.show_categories, name='show_categories'),
+    path('calprice', views.calprice, name='calprice'),
+    path('receive-booking/', views.receive_booking_confirmation, name='receive_booking'),
+    path('confirm-booking/', views.confirm_booking, name='confirm_booking'),
+    path('check-driver-status/<int:order_id>/', views.check_driver_status, name='check_driver_status'),
+    path('render-success-page/<int:order_id>/', views.render_success_page, name='render_success_page'),
+    path('reassign-vehicle/', views.reassign_vehicle, name='reassign_vehicle'),
+    path('privacy/', views.privacy_policy, name='privacy_policy'),
+    path('terms/', views.terms_of_service, name='terms_of_service'),
+    path('cancel-order/', views.cancel_order, name='cancel_order'),  # Cancel order URL
+    path('order_details', views.order_detail, name='order_d'),
+    path('submit-feedback/', views.submit_feedback, name='submit_feedback'),
+    path('ambu_booking',views.ambu_booking,name='ambu_book'),
+    path('submit-booking/', views.submit_booking, name='submit_booking'),
+]

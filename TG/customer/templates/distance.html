@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Search{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/distance.css' %}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<div class="container">
+    <h1 class="text-center">Find Distance Between Two Places</h1>
+    <form method="GET" class="form-horizontal">
+        <div class="form-group">
+            <label for="from">From Location:</label>
+            <input type="text" class="form-control" name="from_location" placeholder="Original Location" id="from">
+        </div>
+        <div class="form-group">
+            <label for="to">To Location:</label>
+            <input type="text" class="form-control" name="to_location" placeholder="Destination Location" id="to">
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-info btn-lg" onclick="CalcRoute()">Calculate</button>
+        </div>
+    </form>
+    <div id="output"></div>
+    <div id="googleMap"></div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2aKVzC3za4z7PzGuiHh0evvFdx4agki0&libraries=places&callback=initMap" async defer></script>
+<script src="{% static 'js/distance.js' %}"></script>
+{% endblock %}
+
+

@@ -1,0 +1,88 @@
+{% extends "abase.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/ahome.css' %}">
+<div class="container">
+    <!-- Employee Details Heading -->
+    <h3 class="text-center">Employee Details</h3>
+
+    <!-- Card 1: Basic Employee Details Table with Profile Picture Toggle -->
+    <div class="card position-relative mt-4">
+        <div class="card-body">
+            <!-- Use .table-responsive to ensure table fits within container on all screen sizes -->
+            <div class="table-responsive">
+                <table class="table table-bordered table-sm"> <!-- table-sm to reduce overall table size -->
+                    <thead>
+                        <tr>
+                            <th>Employee ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Phone Number</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                            <th>Aadhaar Number</th>
+                            <th>Joining Date</th>
+                            <th>Profile Picture</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>12345</td>
+                            <td>John</td>
+                            <td>Doe</td>
+                            <td>+1 234 567 8901</td>
+                            <td>john.doe@example.com</td>
+                            <td>123 Main St, Cityville, ST, 12345</td>
+                            <td>1234 5678 9101</td>
+                            <td>2023-01-15</td>
+                            <td>
+                                <button id="viewProfileBtn" class="btn btn-primary btn-sm" onclick="toggleProfile()">View</button>
+                                <div class="text-center mt-2">
+                                    <img id="profilePic" src="path/to/profile_pic.jpg" alt="Profile Picture" class="profile-pic">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>67890</td>
+                            <td>Jane</td>
+                            <td>Smith</td>
+                            <td>+1 987 654 3210</td>
+                            <td>jane.smith@example.com</td>
+                            <td>456 Elm St, Townsville, ST, 67890</td>
+                            <td>1098 7654 3210</td>
+                            <td>2022-03-20</td>
+                            <td>
+                                <button id="viewProfileBtn2" class="btn btn-primary btn-sm" onclick="toggleProfile('profilePic2', 'viewProfileBtn2')">View</button>
+                                <div class="text-center mt-2">
+                                    <img id="profilePic2" src="path/to/profile_pic2.jpg" alt="Profile Picture" class="profile-pic">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript to toggle profile picture visibility -->
+<script>
+    function toggleProfile(profilePicId, btnId) {
+        var profilePic = document.getElementById(profilePicId);
+        var btn = document.getElementById(btnId);
+
+        if (profilePic.style.display === "none" || profilePic.style.display === "") {
+            profilePic.style.display = "block"; // Show picture
+            btn.textContent = "Hide";  // Change button text
+        } else {
+            profilePic.style.display = "none";  // Hide picture
+            btn.textContent = "View";  // Revert button text
+        }
+    }
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock content %}

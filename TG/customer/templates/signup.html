@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer - Register</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+</head>
+<body>
+
+   <div class="container" id="register">
+        <div class="header">
+            <h1>Spedocity</h1>
+        </div>
+        <h2>Sign-Up</h2>
+        <div id="status-message"></div>
+        <form id="signup-form" method="POST" action="{% url "signup" %}">
+            {% csrf_token %}
+            <div id="status-message"></div>
+            <div id="step1" class="show">
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>
+
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" required>
+
+                <label for="phonenumber">Phone Number:</label>
+                <input type="text" id="phonenumber" name="phonenumber" placeholder="Enter your phone number" required pattern="\d{10}" title="Please enter a 10-digit phone number.">
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Please enter a valid email address.">
+
+                <label for="state">State:</label>
+                <select id="state" name="state" required>
+                    <option value="Karnataka" selected>Karnataka</option>
+                </select>
+
+                <label for="district">District:</label>
+                <select id="district" name="district" required>
+                    <option value="">Select your district</option>
+                    <option value="Bagalkot">Bagalkot</option>
+                    <option value="Ballari">Ballari</option>
+                    <option value="Belagavi">Belagavi</option>
+                    <option value="Bengaluru Rural">Bengaluru Rural</option>
+                    <option value="Bengaluru Urban">Bengaluru Urban</option>
+                    <option value="Bidar">Bidar</option>
+                    <option value="Chamarajanagar">Chamarajanagar</option>
+                    <option value="Chikkaballapur">Chikkaballapur</option>
+                    <option value="Chikkamagaluru">Chikkamagaluru</option>
+                    <option value="Chitradurga">Chitradurga</option>
+                    <option value="Dakshina Kannada">Dakshina Kannada</option>
+                    <option value="Davanagere">Davanagere</option>
+                    <option value="Dharwad">Dharwad</option>
+                    <option value="Gadag">Gadag</option>
+                    <option value="Hassan">Hassan</option>
+                    <option value="Haveri">Haveri</option>
+                    <option value="Kalaburagi">Kalaburagi</option>
+                    <option value="Kodagu">Kodagu</option>
+                    <option value="Kolar">Kolar</option>
+                    <option value="Koppal">Koppal</option>
+                    <option value="Mandya">Mandya</option>
+                    <option value="Mysuru">Mysuru</option>
+                    <option value="Raichur">Raichur</option>
+                    <option value="Ramanagara">Ramanagara</option>
+                    <option value="Shivamogga">Shivamogga</option>
+                    <option value="Tumakuru">Tumakuru</option>
+                    <option value="Udupi">Udupi</option>
+                    <option value="Uttara Kannada">Uttara Kannada</option>
+                    <option value="Vijayapura">Vijayapura</option>
+                    <option value="Yadgir">Yadgir</option>
+                </select>
+
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" placeholder="Enter your city" required>
+
+                <label for="photo">Upload Photo:</label>
+                <input type="file" id="photo" name="photo" accept="image/*" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+                <label for="confirmPassword">Confirm Password:</label>
+                <div class="password-container">
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+                    <i class="fas fa-eye" id="togglePassword" onclick="togglePasswordVisibility()"></i>
+                </div>
+
+                <button type="submit">Register</button>
+                <p class="login-link">Already have an account? <a href="{% url 'vlogin' %}">Login Here</a></p>
+                
+                <div class="separator"></div>
+                
+                <div class="social-login">
+                    <button class="facebook-login">
+                        <i class="fab fa-facebook-f"></i> Login with Facebook
+                    </button>
+                    <button class="google-login">
+                        <i class="fab fa-google"></i> Login with Google
+                    </button>
+                </div>
+            </div>
+        </form>
+
+
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevent form from submitting the traditional way
+
+            const formData = new FormData(this);
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            fetch("{% url 'signup' %}", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-CSRFToken": csrfToken,
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const statusMessage = document.getElementById('status-message');
+                statusMessage.innerHTML = '';  // Clear previous messages
+
+                if (data.error) {
+                    statusMessage.innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
+                } else if (data.success) {
+                    statusMessage.innerHTML = `<div class="alert alert-success">${data.success}</div>`;
+                    // Optionally, redirect to login page after success
+                    window.location.href = "{% url 'login' %}";
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+        function toggleDropdown() {
+            var dropdownContent = document.getElementById('steps');
+            if (dropdownContent.style.display === 'block') {
+                dropdownContent.style.display = 'none';
+            } else {
+                dropdownContent.style.display = 'block';
+            }
+        }
+
+
+        function toggleMenu() {
+            var menu = document.querySelector('.menu');
+            if (menu.style.display === 'flex') {
+                menu.style.display = 'none';
+            } else {
+                menu.style.display = 'flex';
+            }
+        }
+
+        function togglePasswordVisibility() {
+            var passwordField = document.getElementById('confirmPassword');
+            var passwordIcon = document.getElementById('togglePassword');
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                passwordIcon.classList.remove('fa-eye');
+                passwordIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                passwordIcon.classList.remove('fa-eye-slash');
+                passwordIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Hide the steps dropdown
+        function hideSteps() {
+            document.getElementById('dropdownMenu').style.display = 'none';
+        }
+
+        // Show the steps dropdown
+        function showSteps() {
+            document.getElementById('dropdownMenu').style.display = 'block';
+        }
+        document.getElementById('signup-form').addEventListener('submit', function(event) {
+            const phoneNumber = document.getElementById('phonenumber').value;
+            const email = document.getElementById('email').value;
+            const phonePattern = /^\d{10}$/;
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        
+            if (!phonePattern.test(phoneNumber)) {
+                alert("Please enter a valid 10-digit phone number.");
+                event.preventDefault();  // Stop form submission
+            }
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid email address.");
+                event.preventDefault();  // Stop form submission
+            }
+        });
+    </script>
+</body>
+</html>

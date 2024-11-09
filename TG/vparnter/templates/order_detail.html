@@ -1,0 +1,42 @@
+{% extends "vbase.html" %}
+{% block title %}Order Details{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/od.css' %}">
+<div class="container">
+    <h5>Order Details for Order ID: {{ order.order_id }}</h5>
+
+    <div class="order-detail">
+        <div class="order-info">
+            <p><strong>Customer ID:</strong> {{ order.customer.id }}</p>
+            <p><strong>From Location:</strong> {{ order.from_location }}</p>
+            <p><strong>To Location:</strong> {{ order.to_location }}</p>
+            <p><strong>Purpose:</strong> {{ order.purpose }}</p>
+            <p><strong>Item Name:</strong> {{ order.item_name }}</p>
+            <p><strong>Price:</strong> ₹{{ order.price }}</p>
+            <p><strong>Status:</strong> {{ order.status }}</p>
+        </div>
+
+        {% if feedback %}
+        <div class="order-feedback">
+            <h6>Customer Feedback</h6>
+            <p><strong>Rating:</strong> {{ feedback.rating }}/5</p>
+            <p><strong>Description:</strong> {{ feedback.description }}</p>
+        </div>
+        {% else %}
+        <p>No feedback available for this order.</p>
+        {% endif %}
+
+        {% if waiting_time %}
+        <div class="order-waiting-time">
+            <h6>Waiting Time</h6>
+            <p><strong>Duration:</strong> {{ waiting_time.get_formatted_duration }}</p>
+            <p><strong>Waiting Time Price:</strong> ₹{{ waiting_time.waiting_time_price }}</p>
+        </div>
+        <br>
+        {% else %}
+        <p>No waiting time recorded for this order.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

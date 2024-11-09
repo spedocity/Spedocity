@@ -1,0 +1,153 @@
+.page-title {
+    width: 100%;
+    text-align: center;
+    font-size: 40px;
+    font-weight: 700;
+    color: #333;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    padding: 20px 0;
+    background-color: #abdbf1; /* Light green background */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease; /* Transition effect */
+}
+
+.page-title:hover {
+    background-color: #76c76b; /* Darker green on hover */
+}
+
+.profile-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    transition: transform 0.3s ease; /* Transition effect */
+}
+
+.profile-container:hover {
+    transform: scale(1.02); /* Slight zoom on hover */
+}
+
+.profile-photo {
+    flex-shrink: 0;
+    text-align: center;
+    width: 220px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-right: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    height: 100%;
+    transition: background-color 0.3s ease; /* Transition effect */
+}
+
+.profile-photo:hover {
+    background-color: #e9ecef; /* Slightly darker on hover */
+}
+
+.profile-photo img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 4px solid #666;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease; /* Transition effect */
+}
+
+.profile-photo img:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.profile-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.basic-info, .additional-info {
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 26px;
+    color: #444;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+}
+
+p {
+    font-size: 18px;
+    color: #555;
+    margin: 8px 0;
+}
+
+strong {
+    color: #000;
+    font-weight: 600;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Additional styling for better visuals */
+.profile-details p {
+    padding: 10px;
+    background-color: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.profile-details p strong {
+    font-weight: bold;
+    color: #222;
+}
+
+.view-vehicle-btn {
+    display: block;
+    width: 80%; /* Decrease width */
+    max-width: 200px; /* Set a max width */
+    padding: 15px; /* Decrease padding */
+    background-color:  #FFA500; /* Change button color */
+    color: white;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 18px; /* Decrease font size */
+    text-decoration: none;
+    margin: 20px auto; /* Center the button */
+    transition: background-color 0.3s ease;
+}
+
+.view-vehicle-btn:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+/* Media query for responsive design */
+@media (max-width: 768px) {
+    .profile-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-photo {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+}

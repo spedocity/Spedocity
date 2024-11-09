@@ -1,0 +1,324 @@
+{% extends "base.html" %}
+{% block title %}Auto Booking{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/auto.css' %}">
+<br>
+<div class="booking-container">
+    <h2>Auto Booking</h2>
+    
+    <form id="bookingForm" action="{% url 'calprice' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" id="passenger" name="passenger" value="Passenger">
+
+        <div id="firstPage">
+            <label for="from-location">From Location:</label>
+            <div class="input-group">
+                <input type="text" id="from-location" name="from-location" placeholder="Enter starting point" required>
+                <span class="current-location-text" onclick="setCurrentLocation('from-location')">Use Current Location</span>
+            </div>
+
+            <label for="to-location">To Location:</label>
+            <div class="input-group">
+                <input type="text" id="to-location" name="to-location" placeholder="Enter destination" required>
+                <span class="current-location-text" onclick="setCurrentLocation('to-location')">Use Current Location</span>
+            </div>
+
+            <div class="via-heading">Via Locations:</div>
+            <div class="note">(Include a point to catch up with friends)</div>
+
+            <div id="via-locations"></div>
+
+            <button type="button" id="add-via">+ Add Via Location</button>
+            <button type="button" id="go-button">Go</button>
+        </div>
+
+        <div id="secondPage" class="hidden">
+            <h2 class="booking-details-heading">
+                <span class="back-icon" id="back-button">←</span> Booking Details
+            </h2>
+            <p><strong>From:</strong> <span id="display-from"></span></p>
+            <p><strong>To:</strong> <span id="display-to"></span></p>
+            <div id="display-via"></div>
+            <div id="distance-duration" style="margin-top: 10px;">
+                <p><strong>Distance:</strong> <span id="distance"></span></p>
+                <p><strong>Duration:</strong> <span id="duration"></span></p>
+            </div>
+            <div id="map"></div>
+            <button type="submit" id="confirm-button">Confirm Location</button>
+        </div>
+        <div id="thirdPage" class="hidden">
+            <h2 class="booking-summary-heading">Booking Summary</h2>
+            <p id="calculated-price">Price: ₹0.00</p>
+            <div id="vehicle-category-details" class="vehicle-category-details">
+                <!-- Category details and image will be dynamically populated by JavaScript -->
+            </div>
+            <button type="button" class="submit-button" id="confirm-booking-button">Confirm Booking</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    const receiveBookingUrl = "{% url 'receive_booking' %}";
+    let viaCount = 0;
+    let map, directionsService, directionsRenderer;
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const fromLocationInput = document.getElementById('from-location');
+        const toLocationInput = document.getElementById('to-location');
+        
+        // Autocomplete
+        const autocompleteFrom = new google.maps.places.Autocomplete(fromLocationInput);
+        const autocompleteTo = new google.maps.places.Autocomplete(toLocationInput);
+
+        // Add Via Location Button
+        document.getElementById('add-via').addEventListener('click', function() {
+            viaCount++;
+            addViaLocation(viaCount);
+        });
+
+        function addViaLocation(count) {
+            const viaGroup = document.createElement('div');
+            viaGroup.className = 'input-group';
+            viaGroup.id = `via-group-${count}`;
+
+            const newViaField = document.createElement('input');
+            newViaField.type = 'text';
+            newViaField.id = `via-location-${count}`;
+            newViaField.name = `via-location-${count}`;
+            newViaField.placeholder = `Add via location ${count}`;
+
+            new google.maps.places.Autocomplete(newViaField); // Initialize autocomplete
+
+            const cancelIcon = document.createElement('span');
+            cancelIcon.className = 'cancel-icon';
+            cancelIcon.innerHTML = '×';
+            cancelIcon.onclick = function() {
+                removeViaField(count);
+            };
+
+            viaGroup.appendChild(newViaField);
+            viaGroup.appendChild(cancelIcon);
+
+            document.getElementById('via-locations').appendChild(viaGroup);
+        }
+
+        function removeViaField(count) {
+            const viaGroup = document.getElementById(`via-group-${count}`);
+            if (viaGroup) {
+                viaGroup.remove();
+            }
+        }
+
+        // Go Button Click
+        document.getElementById('go-button').addEventListener('click', function() {
+            const fromLocation = fromLocationInput.value;
+            const toLocation = toLocationInput.value;
+            document.getElementById('display-from').innerText = fromLocation;
+            document.getElementById('display-to').innerText = toLocation;
+
+            const viaLocations = Array.from(document.getElementById('via-locations').getElementsByTagName('input'))
+                .map(input => input.value)
+                .filter(value => value !== '');
+
+            const displayVia = document.getElementById('display-via');
+            displayVia.innerHTML = '';
+            if (viaLocations.length > 0) {
+                viaLocations.forEach((location, index) => {
+                    displayVia.innerHTML += `<strong>Via ${index + 1}:</strong> ${location}<br>`;
+                });
+            }
+
+            document.getElementById('firstPage').classList.add('hidden');
+            document.getElementById('secondPage').classList.remove('hidden');
+
+            initMap(fromLocation, viaLocations, toLocation);
+        });
+
+        // Back Button Click
+        document.getElementById('back-button').addEventListener('click', function() {
+            document.getElementById('firstPage').classList.remove('hidden');
+            document.getElementById('secondPage').classList.add('hidden');
+        });
+
+        // Confirm Button Click
+        document.getElementById('confirm-button').addEventListener('click', function() {
+            const selectedFrom = document.getElementById('display-from').innerText;
+            const selectedTo = document.getElementById('display-to').innerText;
+            //alert(`Confirmed:\nFrom: ${selectedFrom}\nTo: ${selectedTo}`);
+        });
+
+        // Initialize Map
+        function initMap(from, vias, to) {
+            directionsRenderer = new google.maps.DirectionsRenderer();
+            directionsService = new google.maps.DirectionsService();
+
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 7,
+                center: {lat: -34.397, lng: 150.644}
+            });
+            directionsRenderer.setMap(map);
+
+            const waypoints = vias.map(location => ({
+                location,
+                stopover: true
+            }));
+
+            const request = {
+                origin: from,
+                destination: to,
+                waypoints,
+                travelMode: google.maps.TravelMode.DRIVING
+            };
+
+            directionsService.route(request, function(result, status) {
+                if (status === google.maps.DirectionsStatus.OK) {
+                    directionsRenderer.setDirections(result);
+                    const distance = result.routes[0].legs.reduce((sum, leg) => sum + leg.distance.value, 0) / 1000;
+                    const duration = result.routes[0].legs.reduce((sum, leg) => sum + leg.duration.value, 0) / 60;
+                    document.getElementById('distance').innerText = `${distance.toFixed(2)} km`;
+                    document.getElementById('duration').innerText = `${duration.toFixed(2)} minutes`;
+                } else {
+                    alert('Unable to find route: ' + status);
+                }
+            });
+        }
+
+        // Current Location Function
+        window.setCurrentLocation = function(inputId) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    const locationInput = document.getElementById(inputId);
+                    const geocoder = new google.maps.Geocoder();
+
+                    const latlng = { lat, lng };
+                    geocoder.geocode({ 'location': latlng }, function(results, status) {
+                        if (status === 'OK') {
+                            if (results[0]) {
+                                locationInput.value = results[0].formatted_address; // Use the formatted address
+                            } else {
+                                alert('No results found');
+                            }
+                        } else {
+                            alert('Geocoder failed due to: ' + status);
+                        }
+                    });
+                }, function() {
+                    alert('Geolocation service failed. Please allow location access.');
+                });
+            } else {
+                alert('Geolocation is not supported by this browser.');
+            }
+        };
+    });
+
+    
+    document.getElementById('confirm-button').addEventListener('click', function(event) {
+        event.preventDefault();
+    
+        const distance = parseFloat(document.getElementById('distance').innerText.split(' ')[0]);
+        const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+        const categoryID = 7;  // Replace with dynamic value if needed
+    
+        if (isNaN(distance)) {
+            alert('Invalid distance value');
+            return;
+        }
+    
+        fetch("{% url 'calprice' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken,
+            },
+            body: JSON.stringify({
+                distance: distance,
+                category: categoryID
+            }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.price) {
+                document.getElementById('calculated-price').innerText = `Price: ₹${data.price}`;
+                document.getElementById('vehicle-category-details').innerHTML = `
+                    <strong>Category:</strong> ${data.category} <br>
+                    <img src="${data.image}" alt="Vehicle Image" class="category-image">`;
+    
+                document.getElementById('secondPage').classList.add('hidden');
+                document.getElementById('thirdPage').classList.remove('hidden');
+            } else {
+                alert('Error: ' + (data.error || 'Unable to calculate price'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while calculating the price.');
+        });
+    });
+
+    const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+    
+        document.getElementById('confirm-booking-button').addEventListener('click', function () {
+            console.log("Confirm Booking Button Clicked");
+    
+            // Create a FormData object
+            const formData = new FormData();
+            
+            // Collect booking data from the form/display and append to FormData
+            formData.append('from-location', document.getElementById('display-from').innerText);
+            formData.append('to-location', document.getElementById('display-to').innerText);
+            
+            // Collecting via locations as a list
+            const viaLocations = Array.from(document.querySelectorAll('#via-locations input'))
+                .map(input => input.value)
+                .filter(value => value !== '');
+            viaLocations.forEach((location, index) => {
+                formData.append(`via-location[${index}]`, location);
+            });
+    
+            formData.append('distance', document.getElementById('distance').innerText);
+            formData.append('duration', document.getElementById('duration').innerText);
+            formData.append('selected-category-price', document.getElementById('calculated-price').innerText);
+            formData.append('csrfmiddlewaretoken', csrfToken);
+    
+            console.log("Booking Data:", formData);
+    
+            // Send the booking data to the backend using fetch
+            fetch(receiveBookingUrl, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.text();
+            })
+            .then(html => {
+                // Directly write the response HTML to the document
+                document.open();
+                document.write(html);
+                document.close();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while processing the booking.');
+            });
+        });
+    });
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2aKVzC3za4z7PzGuiHh0evvFdx4agki0&libraries=places"></script>
+{% endblock content %}
