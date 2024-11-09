@@ -92,9 +92,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'spedocity',
-        'USER': 'postgres',
-        'PASSWORD': 'spedocity@12',
-        'HOST': '65.254.81.149',
+        'USER': 'azelic',
+        'PASSWORD': 'Eha1@azelic',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
