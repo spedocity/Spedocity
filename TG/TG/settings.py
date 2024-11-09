@@ -91,10 +91,10 @@ WSGI_APPLICATION = 'TG.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'TG',
+        'NAME': 'spedocity',
         'USER': 'postgres',
-        'PASSWORD': 'Akhi@14',
-        'HOST': 'localhost',
+        'PASSWORD': 'spedocity@12',
+        'HOST': '65.254.81.149',
         'PORT': '5432',
     }
 }
