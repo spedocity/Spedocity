@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-%+zbmsfz)l(09424sdz5!qx8ag5b&c_hk#v28yjn!t4fe-77c=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['65.254.81.149','www.spedocity.com','spedocity.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -91,9 +91,9 @@ WSGI_APPLICATION = 'TG.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'spedocity',
-        'USER': 'azelic',
-        'PASSWORD': 'Eha1@azelic',
+        'NAME': 'TG',
+        'USER': 'postgres',
+        'PASSWORD': 'Akhi@14',
         'HOST': 'localhost',
         'PORT': '5432',
     }
