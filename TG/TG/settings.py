@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'TG.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'TG',
+        'NAME': 'tg',
         'USER': 'postgres',
         'PASSWORD': 'Akhi@14',
         'HOST': 'localhost',
