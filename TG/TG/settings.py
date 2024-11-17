@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['65.254.81.149','spedocity.com']
 
+CSRF_COOKIE_SECURE = True
+
 
 # Application definition
 
