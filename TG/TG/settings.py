@@ -98,7 +98,10 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
+CSRF_TRUSTED_ORIGINS = [
+    'http://65.254.81.149',
+    'http://your_domain.com'
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
