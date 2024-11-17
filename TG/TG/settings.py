@@ -100,7 +100,7 @@ DATABASES = {
 }
 CSRF_TRUSTED_ORIGINS = [
     'http://65.254.81.149',
-    'http://your_domain.com'
+    'http://spedocity.com',
 ]
 
 # Password validation
