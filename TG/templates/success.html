@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}Success{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/success.css' %}">
+<div class="parent-wrapper">
+<div class="container">
+    <h1>Vehicle Booked Successfully!</h1>
+    
+    <div class="vehicle-photo-container">
+        <img src="{{ vehicle_image_url }}" alt="Booked Vehicle" />
+    </div>
+
+    <div class="vehicle-id-otp-container">
+        <p class="vehicle-id"><strong>Vehicle ID:</strong> {{ vehicle_id }}</p>
+        <p class="otp-label"><strong>OTP:</strong> {{ otp }}</p>
+    </div>
+
+    <div class="additional-info">
+        <p class="info-item"><strong>Order ID:</strong> {{ order_id }}</p>
+        <p class="info-item"><strong>Driver Name:</strong> {{ driver_name }}</p>
+        <p class="info-item"><strong>Driver ID:</strong> {{ driver_id }}</p>
+        <p class="info-item"><strong>Vehicle Location:</strong> {{ vehicle_location }}</p>
+        <p class="info-item"><strong>Distance:</strong> {{ distance }} km</p>
+        <p class="info-item"><strong>Price:</strong> ₹{{ price }}</p>
+    </div><br>
+
+    <a href="{% url "home" %}" class="home-button">Back to Home</a>
+
+    <button class="cancel-button" onclick="showConfirmation()">Cancel</button>
+
+
+    <div id="confirmation-overlay" class="confirmation-overlay" style="display: none;"></div>
+
+    <!-- Confirmation dialog with Yes/No options -->
+    <div id="confirmation-dialog" class="confirmation-dialog" style="display: none;">
+        <p>Are you sure you want to cancel this order?</p>
+        <button id="confirm-cancel" class="confirm-button">Yes, Cancel</button>
+        <button id="abort-cancel" class="abort-button">No, Go Back</button>
+    </div>
+
+    <!-- Success message after cancellation -->
+    <div id="cancellation-message" style="display: none; color: green; font-weight: bold;">
+        Your order has been cancelled successfully.
+    </div>
+</div>
+<!-- Section to show the confirmation message -->
+<div id="cancellation-message" style="display: none;"></div>
+<script>
+    // Show the confirmation dialog
+function showConfirmation() {
+    document.getElementById('confirmation-overlay').style.display = 'block';
+    document.getElementById('confirmation-dialog').style.display = 'block';
+}
+
+// Hide the confirmation dialog
+function hideConfirmation() {
+    document.getElementById('confirmation-overlay').style.display = 'none';
+    document.getElementById('confirmation-dialog').style.display = 'none';
+}
+
+// Set up the click event for the cancel button to show confirmation dialog
+document.querySelector('.cancel-button').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent default button behavior
+    showConfirmation();
+});
+
+// Handle the confirmation of cancellation
+document.getElementById('confirm-cancel').addEventListener('click', function() {
+    const orderId = "{{ order_id }}";  // Get the order ID from the template
+
+    // Send an AJAX request to cancel the order
+    fetch("{% url 'cancel_order' %}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": "{{ csrf_token }}" // Ensure CSRF token is included
+        },
+        body: JSON.stringify({ "order_id": orderId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Show cancellation success message
+            document.getElementById('confirmation-dialog').style.display = 'none';
+            document.getElementById('confirmation-overlay').style.display = 'none';
+            document.getElementById('cancellation-message').style.display = 'block';
+
+            // Redirect to the home page after 2 seconds
+            setTimeout(function() {
+                window.location.href = "{% url 'home' %}";
+            }, 2000);
+        } else {
+            alert("Failed to cancel the order. Please try again.");
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+
+// Handle the cancel action for the "No, Go Back" button
+document.getElementById('abort-cancel').addEventListener('click', function() {
+    hideConfirmation(); // Hide the confirmation dialog without cancelling
+});
+    </script>
+{% endblock content %}

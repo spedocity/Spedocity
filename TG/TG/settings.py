@@ -67,7 +67,7 @@ ROOT_URLCONF = 'TG.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'TG.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tg',
+        'NAME': 'TG',
         'USER': 'postgres',
         'PASSWORD': 'Akhi@14',
         'HOST': 'localhost',
@@ -149,11 +149,6 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # Set the session cookie age (in seconds)
 SESSION_COOKIE_AGE = 18000 # 30 minutes
 
-# Ensure CSRF cookies are only sent over HTTPS
-CSRF_COOKIE_SECURE = True
-
-# Prevent JavaScript access to CSRF cookies
-CSRF_COOKIE_HTTPONLY = True
 
 # Enable HTTP Strict Transport Security (HSTS)
 SECURE_HSTS_SECONDS = 31536000  # 1 year

@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% block title %}Order Details{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/orderdetails.css' %}">
+
+<div class="page-container">
+    <!-- Information Section -->
+    <div class="info-container">
+        <div class="logo-container">
+            <img src="{% static 'images/logofi.png' %}" alt="App Logo" class="logo">
+        </div>
+        <div>
+            <p class="order-id" style="font-weight: bold;">Order ID: {{ order.order_id }}</p>
+            <p class="order-date">{{ order.date }}</p>
+        </div>
+    </div>
+
+    <!-- Order Details -->
+    <div class="card">
+        <p><strong>Order ID:</strong> {{ order.order_id }}</p>
+        <p><strong>Date:</strong> {{ order.date }}</p>
+        <p><strong>Driver:</strong> {{ order.driver.partner.firstname }} {{ order.driver.partner.lastname }}</p>
+        <p><strong>Driver ID:</strong> {{ order.driver.driver_id }}</p>
+        <p><strong>From:</strong> {{ order.from_location }}</p>
+        <p><strong>To:</strong> {{ order.to_location }}</p>
+        <p><strong>Purpose:</strong> {{ order.purpose }}</p>
+        <p><strong>Item Name:</strong> {{ order.item_name }}</p>
+        <p><strong>Load (kg):</strong> {{ order.load_kg }}</p>
+        <p><strong>Services:</strong> {{ order.services }}</p>
+        <p><strong>Status:</strong> {{ order.status }}</p>
+        <p><strong>Distance (km):</strong> {{ order.distance }}</p>
+        <p><strong>Price (₹):</strong>{{order.price|add:order.processing_fee}}</p>
+        <p><strong>Total Price:</strong> <span class="text-success font-weight-bold">₹{{ order.price|add:order.processing_fee|add:total_waiting_time_price }}</span></p>
+    </div>
+
+    <!-- Waiting Time Section -->
+    {% if waiting_times %}
+    <div class="waiting-time-container">
+        <p class="waiting-time-title">Waiting Times</p>
+        <ul>
+            {% for waiting_time in waiting_times %}
+            <li>
+                <strong>Start Time:</strong> {{ waiting_time.start_time }} |
+                <strong>End Time:</strong> {{ waiting_time.end_time|default:"Still Waiting" }} |
+                <strong>Duration:</strong> {{ waiting_time.duration }} |
+                <strong>Price:</strong> ₹{{ waiting_time.waiting_time_price }}
+            </li>
+            {% endfor %}
+        </ul>
+        <p><strong>Total Waiting Time Charges:</strong> ₹{{ total_waiting_time_price }}</p>
+    </div>
+    {% endif %}
+
+    <!-- Feedback Section -->
+    {% if order.status != 'cancelled' %}
+    <div class="feedback-container" id="feedbackSection">
+        <p class="feedback-title">Leave Your Feedback</p>
+
+        {% if feedback %}
+            <!-- Display existing feedback -->
+            <div class="your-feedback-container">
+                <p class="your-feedback-title">Your Feedback:</p>
+                <div class="star-rating">
+                    {% for i in rating_range %}
+                        <span class="star {% if i <= feedback.rating %}selected{% endif %}" data-value="{{ i }}">&#9733;</span>
+                    {% endfor %}
+                </div>
+                <p class="feedback-text">{{ feedback.description }}</p>
+            </div>
+        {% else %}
+            <!-- Show the feedback form -->
+            <div class="star-rating">
+                {% for i in rating_range %}
+                    <span class="star" data-value="{{ i }}">&#9733;</span>
+                {% endfor %}
+            </div>
+            <form id="feedbackForm" method="POST" action="">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="feedback">Your Feedback:</label>
+                    <textarea class="form-control" id="feedback" name="feedback" rows="4" placeholder="Write your feedback here..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Feedback</button>
+            </form>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const stars = document.querySelectorAll(".star");
+        let selectedRating = 0;
+
+        stars.forEach(star => {
+            star.addEventListener("click", function() {
+                selectedRating = this.getAttribute("data-value");
+                updateStarRating(selectedRating);
+            });
+        });
+
+        function updateStarRating(rating) {
+            stars.forEach(star => {
+                if (star.getAttribute("data-value") <= rating) {
+                    star.classList.add("selected");
+                } else {
+                    star.classList.remove("selected");
+                }
+            });
+        }
+
+        $('#feedbackForm').on('submit', function(event) {
+            event.preventDefault();
+
+            const driverId = "{{ order.driver.id }}";
+            const orderId = "{{ order.order_id }}";
+            const rating = selectedRating;
+            const description = $('#feedback').val();
+
+            if (rating > 0) {
+                $.ajax({
+                    url: '/submit-feedback/',
+                    method: 'POST',
+                    data: {
+                        driver_id: driverId,
+                        order_id: orderId,
+                        rating: rating,
+                        description: description,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            // Hide the feedback form and show the submitted feedback
+                            $('#feedbackForm').hide();
+                            $('#feedbackSection').html(`
+                                <div class="your-feedback-container">
+                                    <p class="your-feedback-title">Your Feedback:</p>
+                                    <div class="star-rating">
+                                        ${[...Array(5).keys()].map(i =>
+                                            `<span class="star ${i < rating ? 'selected' : ''}">&#9733;</span>`
+                                        ).join('')}
+                                    </div>
+                                    <p class="feedback-text">${description || 'No additional comments.'}</p>
+                                </div>
+                            `);
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        alert('An error occurred: ' + error);
+                    }
+                });
+            } else {
+                alert("Please provide a rating.");
+            }
+        });
+    });
+</script>
+{% endblock content %}

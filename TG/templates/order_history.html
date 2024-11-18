@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/order_history.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<div class="container">
+    
+    <div class="header">
+      <a href="{% url 'home' %}">
+        <i class="fas fa-arrow-left"></i>
+      </a>
+      <h1>My Orders</h1>
+    </div>
+    
+    <!-- Loop through each order passed from the view -->
+    {% for ride in rides %}
+    <div class="ride-card" data-order-id="{{ ride.order_id }}">
+      <div class="ride-header">
+        <img alt="vehicle icon" height="40" src="{% static 'images/logofi.png' %}" width="40"/>
+        <div class="ride-info">
+          <p>{{ ride.date }} • {{ ride.time }}</p>
+        </div>
+        <span class="ride-status {{ ride.status|lower }}">{{ ride.status }}</span>
+      </div>
+      <div class="ride-details">
+        <div class="location">
+          <i class="fas fa-map-marker-alt" style="color: green;"></i>
+          <p>{{ ride.from_address }}</p>
+        </div>
+        <div class="location">
+          <i class="fas fa-map-marker-alt" style="color: red;"></i>
+          <p>{{ ride.to_address }}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script>
+    window.onload = function() {
+      const rideCards = document.querySelectorAll('.ride-card');
+      
+      rideCards.forEach(card => {
+        const orderId = card.getAttribute('data-order-id');
+        console.log('Order ID:', orderId);  // Debugging log
+        
+        const rideInfoDiv = card.querySelector('.ride-info');
+        const orderIdElement = document.createElement('p');
+        orderIdElement.textContent = `Order ID: ${orderId}`;
+        orderIdElement.style.fontSize = '14px';
+        orderIdElement.style.color = '#757575';
+        rideInfoDiv.insertBefore(orderIdElement, rideInfoDiv.firstChild);
+    
+        // Redirect to order_details.html with the order ID as a query parameter
+        card.addEventListener('click', () => {
+          window.location.href = `/order_details?order_id=${encodeURIComponent(orderId)}`;
+        });
+      });
+    }
+  </script>
+{% endblock content %}

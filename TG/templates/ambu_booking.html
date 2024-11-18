@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/ambu.css' %}">
+
+<div class="container">
+    <h2>Ambulance Service</h2>
+    <form id="location-form" method="post">
+        {% csrf_token %}
+        <label for="accident-spot">Location:</label>
+        <input type="text" id="accident-spot" name="accident-spot" placeholder="Enter location manually">
+        
+        <button type="button" id="use-current-location">Use Current Location</button>
+        
+        <div id="map" style="height: 400px;"></div>
+        
+        <button type="submit">Confirm Booking</button>
+    </form>
+</div>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2aKVzC3za4z7PzGuiHh0evvFdx4agki0&libraries=places&callback=initMap">
+</script>
+<script src="{% static 'js/ambu.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock content %}

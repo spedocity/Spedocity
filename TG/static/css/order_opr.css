@@ -1,0 +1,194 @@
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+  }
+
+  .form-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    font-weight: bold;
+    color: #444;
+    flex: 1;
+    margin-right: 10px;
+  }
+
+  .form-group span, 
+  .form-group select {
+    flex: 2;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    transition: border-color 0.3s;
+    position: relative;
+  }
+
+  .form-group span:focus, 
+  select:focus {
+    border-color: #42a5f5;
+    outline: none;
+  }
+
+  .btn {
+    background-color: #42a5f5;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s;
+  }
+
+  .btn:hover {
+    background-color: #1e88e5;
+    transform: scale(1.05);
+  }
+
+  .image-container {      
+    display: inline-flex;
+    margin-left: 158px;
+  }
+
+  .item-image {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-left: 0px; /* Margin to separate from checkbox */
+  }
+
+  .verification-container {
+    display: flex;
+    align-items: center; /* Align items center */
+    margin-left: 10px;
+  }
+
+  .checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-right: 5px; /* Space between checkbox and text */
+  }
+
+  .verified-text {
+    font-size: 18px;
+    color: green;
+    display: none; /* Initially hidden */
+  }
+
+  #otpSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f1f8e9;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  #otpInput {
+    width: 60%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    text-align: center;
+    font-size: 16px;
+    transition: border-color 0.3s;
+  }
+
+  #otpInput:focus {
+    border-color: #66bb6a;
+  }
+
+  #otpMessage {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    visibility: hidden;
+    transition: visibility 0.3s, opacity 0.3s;
+    opacity: 0;
+  }
+
+  #otpMessage.visible {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .save-container {
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  .status {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: green;
+  }
+
+  .copy-container {
+    display: flex;
+    align-items: center;
+    flex: 2;
+  }
+
+  .copy-icon {
+    font-size: 18px;
+    color: #42a5f5;
+    cursor: pointer;
+    margin-left: 389px; /* Space between number and icon */
+  }
+
+  .customer-info {
+    display: flex;
+    align-items: center;
+    flex-grow: 1; /* Allow this span to grow */
+  }
+  .copy-container {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Controls space between number and icon */
+}
+
+.customer-info {
+    display: flex;
+    align-items: center;
+}
+
+#customerNumber {
+    font-weight: bold;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    flex: 1;
+}
+
+.copy-icon {
+    font-size: 18px;
+    color: #42a5f5;
+    cursor: pointer;
+    margin-left: 10px; /* Adjusts space between number and icon */
+}

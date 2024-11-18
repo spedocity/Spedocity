@@ -1,0 +1,186 @@
+.profile-container {
+    max-width: 600px;
+    width: 100%;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center; /* Center justify content */
+    margin: 0 auto; /* Center container on page */
+}
+
+h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #e09d23;
+}
+
+.profile-picture {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.profile-picture img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #e09d23;
+}
+
+.edit-icon {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #333;
+    color: white;
+    padding: 5px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.profile-form {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.form-row {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center content in form rows */
+}
+
+label {
+    font-weight: bold;
+    width: 50%;
+    text-align: left;
+    margin-right: 5px;
+}
+
+input, textarea {
+    width: 65%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    resize: none;
+    box-sizing: border-box;
+}
+
+.save-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #e09d23;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: none; /* Hidden until editing is enabled */
+    width: 100%;
+}
+
+.save-button:hover {
+    background-color: #cf8b1d;
+}
+
+.edit-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #e09d23;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.get-location-button {
+    padding: 8px 15px;
+    font-size: 14px;
+    background-color: #e09d23;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    display: none; /* Initially hidden */
+    width: 100%; /* Align button with the input field */
+    max-width: 200px; /* Optional: limit button width */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.location-info {
+    margin-top: 2px; /* Add some margin for spacing */
+    color: #555; /* Gray color for the paragraph */
+    cursor: pointer; /* Change cursor to indicate clickable */
+    text-decoration: underline; /* Add underline to indicate it's clickable */
+    display: none; /* Initially hidden */
+    margin-left: 70px; /* Adjust this value to move the text to the right */
+}
+
+
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 24px;
+    }
+
+    input, textarea {
+        width: 100%;
+    }
+
+    label {
+        width: 100%;
+        text-align: left;
+        margin-bottom: 5px;
+    }
+
+    .profile-picture img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .edit-icon {
+        font-size: 14px;
+        bottom: 5px;
+        right: 5px;
+    }
+
+    .save-button, .edit-button {
+        width: 100%;
+    }
+
+    .get-location-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 20px;
+    }
+
+    .profile-picture img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .edit-icon {
+        font-size: 12px;
+        bottom: 2px;
+        right: 2px;
+    }
+
+    .get-location-button {
+        font-size: 12px;
+        padding: 5px;
+        position: center;
+    }
+}

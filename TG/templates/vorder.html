@@ -1,0 +1,45 @@
+{% extends "vbase.html" %}
+{% block title %}Orders{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/vorder.css' %}">
+<div class="container">
+    <h5>Order Details</h5>
+
+    {% if orders %}
+        <div class="orders-list">
+            {% for order in orders %}
+            <a href="{% url 'order_detail' order.id %}" class="order-card-link">
+                <div class="order-card">
+                    <div class="order-header">
+                        <h6>Order ID: {{ order.order_id }}</h6>
+                        <p class="order-date">{{ order.date }}</p>
+                    </div>
+                    <div class="order-body">
+                        <div class="order-row">
+                            <span class="label">Customer ID:</span>
+                            <span>{{ order.customer_id }}</span>
+                        </div>
+                        <div class="order-row">
+                            <span class="label">From:</span>
+                            <span>{{ order.from_location }}</span>
+                        </div>
+                        <div class="order-row">
+                            <span class="label">To:</span>
+                            <span>{{ order.to_location }}</span>
+                        </div>
+                        <div class="order-row">
+                            <span class="label">Price:</span>
+                            <span>₹{{ order.price }}</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="no-orders">No orders found.</p>
+    {% endif %}
+</div>
+
+{% endblock content %}

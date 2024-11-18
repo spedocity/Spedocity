@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/notifications.css' %}">
+<br>
+<div class="notification-container">
+    {% for notification in notifications %}
+        <div class="notification {% if not notification.is_read %}unread{% endif %}">
+            <h4>{{ notification.title }}</h4>
+            <p>{{ notification.message }}</p>
+            <p><small>{{ notification.created_at|date:"F j, Y, g:i a" }}</small></p>
+            <button class="close-btn" aria-label="Close notification">✖</button>
+        </div>
+    {% empty %}
+        <p>No notifications available.</p>
+    {% endfor %}
+</div>
+
+
+<script>
+    document.querySelectorAll('.close-btn').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const notification = event.target.parentElement;
+            notification.style.opacity = '0';
+            setTimeout(() => notification.remove(), 500);
+        });
+    });
+</script>
+<br>
+{% endblock content %}
