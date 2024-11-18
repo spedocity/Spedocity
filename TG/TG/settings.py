@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['65.254.81.149','spedocity.com']
 
+#ALLOWED_HOSTS = []
+
 CSRF_COOKIE_SECURE = True
 
 
@@ -48,9 +50,10 @@ INSTALLED_APPS = [
     
 ]
 CSP_DEFAULT_SRC = ("'self'",)
-CSP_SCRIPT_SRC = ("'self'", "https://trusted-cdn.com")
-CSP_STYLE_SRC = ("'self'", "https://trusted-cdn.com")
-
+CSP_SCRIPT_SRC = ("'self'",)
+CSP_STYLE_SRC = ("'self'",)
+CSP_IMG_SRC = ("'self'",)  # Allow images only from your domain
+CSP_FONT_SRC = ("'self'",)  # Allow fonts only from your domain
 
 
 MIDDLEWARE = [
