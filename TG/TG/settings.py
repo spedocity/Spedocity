@@ -30,7 +30,7 @@ ALLOWED_HOSTS = ['65.254.81.149','spedocity.com']
 
 #ALLOWED_HOSTS = []
 
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False
 
 
 # Application definition
