@@ -45,15 +45,10 @@ INSTALLED_APPS = [
     'customer',
     'Myadmin',
     'vparnter',
-    'csp',
+    #'csp',
     'channels',
     
 ]
-CSP_DEFAULT_SRC = ("'self'",)
-CSP_SCRIPT_SRC = ("'self'", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com")
-CSP_STYLE_SRC = ("'self'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com")
-CSP_IMG_SRC = ("'self'", "https://cdn.example.com")  # Replace with your image CDN if applicable
-CSP_FONT_SRC = ("'self'", "https://fonts.gstatic.com")
 
 
 MIDDLEWARE = [
