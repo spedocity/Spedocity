@@ -30,7 +30,7 @@ ALLOWED_HOSTS = ['65.254.81.149','spedocity.com']
 
 #ALLOWED_HOSTS = []
 
-CSRF_COOKIE_SECURE = True
+
 
 
 # Application definition
@@ -134,26 +134,6 @@ TIME_ZONE = 'Asia/Kolkata'  # Replace with your local time zone
 USE_TZ = True  # Ensure this is set to True for time zone-aware datetimes
 
 USE_I18N = True
-
-
-
-# Ensure session cookies are only sent over HTTPS
-SESSION_COOKIE_SECURE = True
-
-# Prevent JavaScript access to session cookies
-SESSION_COOKIE_HTTPONLY = True
-
-# Automatically log out users when they close the browser
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-
-# Set the session cookie age (in seconds)
-SESSION_COOKIE_AGE = 18000 # 30 minutes
-
-
-# Enable HTTP Strict Transport Security (HSTS)
-SECURE_HSTS_SECONDS = 31536000  # 1 year
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
