@@ -50,10 +50,10 @@ INSTALLED_APPS = [
     
 ]
 CSP_DEFAULT_SRC = ("'self'",)
-CSP_SCRIPT_SRC = ("'self'",)
-CSP_STYLE_SRC = ("'self'",)
-CSP_IMG_SRC = ("'self'",)  # Allow images only from your domain
-CSP_FONT_SRC = ("'self'",)  # Allow fonts only from your domain
+CSP_SCRIPT_SRC = ("'self'", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com")
+CSP_STYLE_SRC = ("'self'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com")
+CSP_IMG_SRC = ("'self'", "https://cdn.example.com")  # Replace with your image CDN if applicable
+CSP_FONT_SRC = ("'self'", "https://fonts.gstatic.com")
 
 
 MIDDLEWARE = [
@@ -64,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'csp.middleware.CSPMiddleware',
 ]
 
 ROOT_URLCONF = 'TG.urls'
