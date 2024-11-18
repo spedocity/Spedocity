@@ -26,11 +26,11 @@ SECRET_KEY = 'django-insecure-%+zbmsfz)l(09424sdz5!qx8ag5b&c_hk#v28yjn!t4fe-77c=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['65.254.81.149','spedocity.com']
+ALLOWED_HOSTS = ['65.254.81.149','spedocity.com','www.spedocity.com']
 
 #ALLOWED_HOSTS = []
 
-
+ALLOWED_HOSTS=os.getenv("ALLOWED_HOSTS","").split(",")
 
 
 # Application definition
@@ -142,10 +142,10 @@ USE_I18N = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, '/root/TG/TG/static'),
 ]
 
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = BASE_DIR / "/root/TG/TG/staticfiles"
 
 
 # Default primary key field type
