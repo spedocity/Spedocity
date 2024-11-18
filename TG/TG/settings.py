@@ -166,9 +166,8 @@ SECURE_HSTS_PRELOAD = True
 
 STATIC_URL = '/static/'
 
-# Directories to include additional static files during development
 STATICFILES_DIRS = [
-    BASE_DIR / "static",  # Example: Your app-level static files
+    os.path.join(BASE_DIR, 'static'),
 ]
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
