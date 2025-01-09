@@ -192,7 +192,9 @@ def profile_view(request):
 def order_history_view(request):
     # Get the customer ID from the session
     customer_id = request.session.get('customer_id')
-
+ 
+    if not customer_id:
+        return redirect('login')
     # Fetch the customer object
     customer = get_object_or_404(Customer, id=customer_id)
 
@@ -230,6 +232,8 @@ def notifications_view(request):
     # Retrieve customer_id from the session
     customer_id = request.session.get('customer_id')
     
+    if not customer_id:
+        return redirect('login')
     # Ensure the customer exists or return a 404 error
     customer = get_object_or_404(Customer, id=customer_id)
 
@@ -287,10 +291,15 @@ def customer_profile(request):
     return render(request, 'profile.html', {'customer': customer})
 
 def auto_booking(request):
+    customer_id = request.session.get('customer_id')
+    if not customer_id:
+        return redirect('login')
     return render(request,'p_auto_bo.html')
 
 def logi_booking(request):
-    
+    customer_id = request.session.get('customer_id')
+    if not customer_id:
+        return redirect('login')
     return render(request,'logi_booking.html')
 
 def vision(request):
@@ -969,6 +978,9 @@ def submit_feedback(request):
     return JsonResponse({'status': 'error', 'message': 'Invalid request'})
 
 def ambu_booking(request):
+    customer_id = request.session.get('customer_id')
+    if not customer_id:
+        return redirect('login')
     return render(request,'ambu_booking.html')
 
 

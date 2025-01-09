@@ -15,7 +15,8 @@ from django.db.models import Sum,Avg
 def vhome(request):
     partner_name = request.session.get('partner_name')
     partner_phone = request.session.get('partner_phone')
-
+    if not partner_phone:
+        return redirect('vlogin')
     print("Partner Name:", partner_name)
     print("Partner Phone:", partner_phone)
 

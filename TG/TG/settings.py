@@ -26,11 +26,11 @@ SECRET_KEY = 'django-insecure-%+zbmsfz)l(09424sdz5!qx8ag5b&c_hk#v28yjn!t4fe-77c=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['65.254.81.149','spedocity.com','www.spedocity.com']
+#ALLOWED_HOSTS = ['65.254.81.149','spedocity.com','www.spedocity.com']
 
-#ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
-ALLOWED_HOSTS=os.getenv("ALLOWED_HOSTS","").split(",")
+#ALLOWED_HOSTS=os.getenv("ALLOWED_HOSTS","").split(",")
 
 
 # Application definition
@@ -92,18 +92,19 @@ WSGI_APPLICATION = 'TG.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tg',
+        'NAME': 'TG',
         'USER': 'postgres',
         'PASSWORD': 'Akhi@14',
         'HOST': 'localhost',
         'PORT': '5432',
     }
 }
+"""
 CSRF_TRUSTED_ORIGINS = [
     'http://65.254.81.149',
     'http://spedocity.com',
 ]
-
+"""
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -142,10 +143,10 @@ USE_I18N = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, '/root/TG/TG/static'),
+    os.path.join(BASE_DIR, 'static'),
 ]
 
-STATIC_ROOT = BASE_DIR / "/root/TG/TG/staticfiles"
+#STATIC_ROOT = BASE_DIR / "/root/TG/TG/staticfiles"
 
 
 # Default primary key field type
