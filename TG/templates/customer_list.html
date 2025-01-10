@@ -1,0 +1,41 @@
+{% extends "abase.html" %}
+{% block title %}Customer List{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/customer_list.css' %}">
+<div class="main">
+    <h2>Customer List</h2>
+
+    <!-- Responsive container for the table -->
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Customer ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>State</th>
+                    <th>District</th>
+                    <th>City</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.id }}</td>
+                    <td>{{ customer.first_name }}</td>
+                    <td>{{ customer.last_name }}</td>
+                    <td>{{ customer.email }}</td>
+                    <td>{{ customer.phone_number }}</td>
+                    <td>{{ customer.state }}</td>
+                    <td>{{ customer.district }}</td>
+                    <td>{{ customer.city }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}
