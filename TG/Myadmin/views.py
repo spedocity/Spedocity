@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from datetime import date
 from customer.models import Order, Customer
 from vparnter.models import PartnerInfo
@@ -39,3 +39,11 @@ def customer_list_view(request):
         'customers': customers,
     }
     return render(request, 'customer_list.html', context)
+
+def partner_list(request):
+    partner_info_list = PartnerInfo.objects.select_related('partner').all()
+    return render(request, 'partner_list.html', {'partner_info_list': partner_info_list})
+
+def partner_details_view(request, partner_id):
+    partner_info = get_object_or_404(PartnerInfo, partner_id=partner_id)
+    return render(request, 'partner_details.html', {'partner_info': partner_info})

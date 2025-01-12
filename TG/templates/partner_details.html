@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partner Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Partner Details</h1>
+        <table class="table table-bordered">
+            <tr>
+                <th>Partner ID</th>
+                <td>{{ partner_info.partner.id }}</td>
+            </tr>
+            <tr>
+                <th>Driver ID</th>
+                <td>{{ partner_info.driver_id }}</td>
+            </tr>
+            <tr>
+                <th>First Name</th>
+                <td>{{ partner_info.partner.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Last Name</th>
+                <td>{{ partner_info.partner.lastname }}</td>
+            </tr>
+            <tr>
+                <th>Phone Number</th>
+                <td>{{ partner_info.partner.phone_no }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ partner_info.partner.email }}</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>{{ partner_info.address }}</td>
+            </tr>
+            <tr>
+                <th>Date of Birth</th>
+                <td>{{ partner_info.dob }}</td>
+            </tr>
+        </table>
+        <a href="{% url "partner_list" %}" class="btn btn-secondary">Back to List</a>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

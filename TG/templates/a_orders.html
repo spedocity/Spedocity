@@ -74,8 +74,8 @@
                 <td>{{ order.item_name }}</td>
                 <td>{{ order.load_kg }}</td>
                 <td>
-                    {% if order.item_image %}
-                    <img src="{{ order.item_image.url }}" alt="Load Image" width="50">
+                    {% if order.load_image%}
+                    <img src="{{ order.load_image.url }}" alt="Load Image" width="50">
                     {% else %}
                     N/A
                     {% endif %}
