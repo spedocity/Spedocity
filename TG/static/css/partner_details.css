@@ -1,0 +1,114 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa; /* Light gray background */
+    overflow-y: scroll; /* Ensure scrolling works */
+    height: 100%;
+    width: 100%;
+}
+
+/* Container Styling */
+.container {
+    width: 100%; /* Full screen width */
+    height: auto; /* Adjust height as needed */
+    margin: 20px auto; /* Center content */
+    padding: 20px;
+    background-color: #ffffff; /* White background for the container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border-radius: 8px; /* Smooth corners */
+    overflow: auto; /* Allow scrolling if needed */
+}
+
+/* Table Styling */
+table {
+    width: 100%; /* Full width table */
+    border-collapse: collapse; /* Remove gaps between table cells */
+    margin-bottom: 20px; /* Add space below tables */
+    font-size: 14px; /* Comfortable font size */
+}
+
+table th, table td {
+    border: 1px solid #dee2e6; /* Light gray border */
+    padding: 10px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+table th {
+    background-color: #f8f9fa; /* Light gray header background */
+    font-weight: bold;
+}
+
+/* Responsive Images */
+table td img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto; /* Center-align images */
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #007bff; /* Primary button color */
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3; /* Darker hover effect */
+}
+
+/* Links */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Maps */
+.vehicle-map {
+    border: 1px solid #dee2e6; /* Border for the map container */
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Light gray track */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888; /* Medium gray thumb */
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Darker gray on hover */
+}
+
+/* Headings */
+h1, h2 {
+    color: #343a40; /* Dark gray for headings */
+    margin-bottom: 20px;
+}

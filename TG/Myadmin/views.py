@@ -1,9 +1,10 @@
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from datetime import date
+from Myadmin.models import Employee
 from customer.models import Order, Customer
-from vparnter.models import PartnerInfo
-
+from vparnter.models import PartnerInfo, Vehicle
+from django.db.models import Sum
 # Create your views here.
 def ahome(request):
     # Calculate statistics
@@ -45,5 +46,58 @@ def partner_list(request):
     return render(request, 'partner_list.html', {'partner_info_list': partner_info_list})
 
 def partner_details_view(request, partner_id):
+    # Retrieve PartnerInfo based on partner_id
     partner_info = get_object_or_404(PartnerInfo, partner_id=partner_id)
-    return render(request, 'partner_details.html', {'partner_info': partner_info})
+    
+    # Retrieve vehicles associated with the partner
+    vehicles = Vehicle.objects.filter(driver=partner_info)
+
+    total_orders = Order.objects.filter(driver=partner_info).count()
+    total_earnings = Order.objects.filter(driver=partner_info).aggregate(total=Sum('price'))['total'] or 0
+    
+    # Retrieve all orders associated with the partner
+    all_orders = Order.objects.filter(driver=partner_info)
+    
+    # Pass partner_info and vehicles to the template
+    context = {
+        'partner_info': partner_info,
+        'vehicles': vehicles,
+        'total_orders': total_orders,
+        'total_earnings': total_earnings,
+        'all_orders': all_orders,
+    }
+    
+    return render(request, 'partner_details.html', context)
+
+from django.contrib.auth.hashers import check_password
+
+def alogin(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')  # Get email from POST data
+        password = request.POST.get('password')
+
+        try:
+            # Query the Employee model using email
+            employee = Employee.objects.get(email=email)
+
+            # Validate password using check_password to compare with hashed password
+            if check_password(password, employee.password):
+                # Manually set session data without using `login`
+                request.session['employee_id'] = employee.id  # Store employee ID
+                request.session['employee_name'] = f'{employee.first_name} {employee.last_name}'  # Store employee name
+                print(request.session) 
+
+                return JsonResponse({'success': 'Login successful!'}, status=200)
+
+            else:
+                return JsonResponse({'error': 'Invalid password.'}, status=400)
+
+        except Employee.DoesNotExist:
+            return JsonResponse({'error': 'Email not registered.'}, status=400)
+
+    elif request.method == 'GET':
+        return render(request, 'alogin.html')
+    
+def alogout_view(request):
+    logout(request)
+    return redirect('ahome')

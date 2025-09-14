@@ -1,50 +1,253 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partner Details</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-5">
-        <h1>Partner Details</h1>
+{% extends "abase.html" %}
+{% block title %}Partner and Vehicle Details{% endblock title %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/partner_details.css' %}">
+<div class="container mt-5">
+    <h1>Partner and Vehicle Details</h1>
+    <h2>Partner Information</h2>
+    <table class="table table-bordered">
+        <tr>
+            <th>Partner ID</th>
+            <td>{{ partner_info.partner.id }}</td>
+        </tr>
+        <tr>
+            <th>Driver ID</th>
+            <td>{{ partner_info.driver_id }}</td>
+        </tr>
+        <tr>
+            <th>First Name</th>
+            <td>{{ partner_info.partner.firstname }}</td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td>{{ partner_info.partner.lastname }}</td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td>{{ partner_info.partner.phone_no }}</td>
+        </tr>
+        <tr>
+            <th>Alternative Phone</th>
+            <td>{{ partner_info.alternative_phone }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ partner_info.partner.email }}</td>
+        </tr>
+        <tr>
+            <th>Address</th>
+            <td>{{ partner_info.address }}</td>
+        </tr>
+        <tr>
+            <th>Date of Birth</th>
+            <td>{{ partner_info.dob }}</td>
+        </tr>
+        <tr>
+            <th>Aadhaar Number</th>
+            <td>{{ partner_info.adhar_no }}</td>
+        </tr>
+        <tr>
+            <th>Driving License Number</th>
+            <td>{{ partner_info.dl }}</td>
+        </tr>
+        <tr>
+            <th>Profile Picture</th>
+            <td>
+                {% if partner_info.profile_picture %}
+                <img src="{{ partner_info.profile_picture.url }}" alt="Profile Picture" class="img-thumbnail" width="150">
+                {% else %}
+                No profile picture available
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Driving License Document</th>
+            <td>
+                {% if partner_info.dl_document %}
+                <a href="{{ partner_info.dl_document.url }}" target="_blank">View Document</a>
+                {% else %}
+                No document uploaded
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+
+    <h2>Vehicle Details</h2>
+    <table class="table table-bordered">
+        {% for vehicle in vehicles %}
+            <tr>
+                <th>Vehicle ID</th>
+                <td>{{ vehicle.vehicle_id }}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Name</th>
+                <td>{{ vehicle.name }}</td>
+            </tr>
+            <tr>
+                <th>Owner Name</th>
+                <td>{{ vehicle.owner_name }}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Type</th>
+                <td>{{ vehicle.vehicle_type }}</td>
+            </tr>
+            <tr>
+                <th>Load Capacity</th>
+                <td>{{ vehicle.load_capacity }} kg</td>
+            </tr>
+            <tr>
+                <th>Location</th>
+                <td>{{ vehicle.location }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div id="map-{{ forloop.counter }}" class="vehicle-map" style="width: 100%; height: 300px;"></div>
+                </td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ vehicle.get_status_display }}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Status</th>
+                <td>{{ vehicle.get_vehicle_status_display }}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Purpose</th>
+                <td>{{ vehicle.get_vehicle_purpose_display }}</td>
+            </tr>
+            <tr>
+                <th>State</th>
+                <td>{{ vehicle.state }}</td>
+            </tr>
+            <tr>
+                <th>District</th>
+                <td>{{ vehicle.district }}</td>
+            </tr>
+            <tr>
+                <th>Taluk/Town</th>
+                <td>{{ vehicle.taluk_town }}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Category</th>
+                <td>{{ vehicle.vehicle_category }}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Photo</th>
+                <td>
+                    {% if vehicle.photo %}
+                    <img src="{{ vehicle.photo.url }}" alt="Vehicle Photo" class="img-thumbnail" width="500">
+                    {% else %}
+                    No photo available
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>RC Card Photo</th>
+                <td>
+                    {% if vehicle.rc_card_photo %}
+                    <a href="{{ vehicle.rc_card_photo.url }}" target="_blank">View RC Card</a>
+                    {% else %}
+                    No RC card uploaded
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Insurance Document</th>
+                <td>
+                    {% if vehicle.insurance %}
+                    <a href="{{ vehicle.insurance.url }}" target="_blank">View Insurance</a>
+                    {% else %}
+                    No insurance document uploaded
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+
+        <h2>Order Summary</h2>
         <table class="table table-bordered">
             <tr>
-                <th>Partner ID</th>
-                <td>{{ partner_info.partner.id }}</td>
+                <th>Total Orders</th>
+                <td>{{ total_orders }}</td>
             </tr>
             <tr>
-                <th>Driver ID</th>
-                <td>{{ partner_info.driver_id }}</td>
-            </tr>
-            <tr>
-                <th>First Name</th>
-                <td>{{ partner_info.partner.firstname }}</td>
-            </tr>
-            <tr>
-                <th>Last Name</th>
-                <td>{{ partner_info.partner.lastname }}</td>
-            </tr>
-            <tr>
-                <th>Phone Number</th>
-                <td>{{ partner_info.partner.phone_no }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ partner_info.partner.email }}</td>
-            </tr>
-            <tr>
-                <th>Address</th>
-                <td>{{ partner_info.address }}</td>
-            </tr>
-            <tr>
-                <th>Date of Birth</th>
-                <td>{{ partner_info.dob }}</td>
+                <th>Total Earnings</th>
+                <td>{{ total_earnings }} INR</td>
             </tr>
         </table>
-        <a href="{% url "partner_list" %}" class="btn btn-secondary">Back to List</a>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+        
+        <!-- Orders List Section -->
+        <h2>All Orders</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer ID</th>
+                    
+                    <th>Status</th>
+                    <th>Price</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in all_orders %}
+                <tr>
+                    <td>{{ order.order_id }}</td>
+                    <td>{{ order.customer.id }} </td>
+                    
+                    <td>{{ order.get_status_display }}</td>
+                    <td>{{ order.price }}</td>
+                    <td>{{ order.date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    <a href="{% url 'partner_list' %}" class="btn btn-secondary">Back to List</a>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2aKVzC3za4z7PzGuiHh0evvFdx4agki0&callback=initMap"></script>
+
+<script>
+function initMap() {
+    const vehicles = [
+        {% for vehicle in vehicles %}
+        {
+            id: {{ forloop.counter }},
+            location: "{{ vehicle.location }}",
+        },
+        {% endfor %}
+    ];
+
+    vehicles.forEach((vehicle) => {
+        const geocoder = new google.maps.Geocoder();
+        const mapContainer = document.getElementById(`map-${vehicle.id}`);
+        
+        if (mapContainer) {
+            const map = new google.maps.Map(mapContainer, {
+                zoom: 12,
+                center: { lat: 0, lng: 0 }, // Default center (will be updated)
+            });
+
+            geocoder.geocode({ address: vehicle.location }, (results, status) => {
+                if (status === "OK" && results[0]) {
+                    const location = results[0].geometry.location;
+                    map.setCenter(location);
+
+                    new google.maps.Marker({
+                        map: map,
+                        position: location,
+                        title: `Vehicle Location: ${vehicle.location}`,
+                    });
+                } else {
+                    console.error(`Geocode failed for ${vehicle.location}: ${status}`);
+                }
+            });
+        }
+    });
+}
+</script>
+{% endblock %}

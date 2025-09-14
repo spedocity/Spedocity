@@ -16,19 +16,28 @@
         <div class="orange-header"></div>
         <span class="menu-icon" onclick="toggleSidebar(event)">☰</span>
         <h1>Spedocity</h1>
-        <button class="login-btn">Login</button>
+    
+        {% if employee_info %}
+            <!-- If employee is logged in, show employee_id -->
+            <span class="employee-id">Employee ID: {{ employee_info.employee_id }}</span>
+        {% else %}
+            <!-- If no employee is logged in, show the login button -->
+            <a href="{% url 'alogin' %}">
+                <button class="login-btn">Login</button>
+            </a>
+        {% endif %}
     </header>
 
     <div class="sidebar" id="sidebar">
         <h2>Menu</h2>
-        <a href="#">Home</a>
+        <a href="{% url "ahome" %}">Home</a>
         <a href="{% url "aorder" %}">Orders</a>
         <a href="#">Pockets</a>
         <a href="{% url "aemployee" %}">Employee</a>
         <a href="{% url "customer_list" %}">Customers Profile's</a>
         <a href="{% url "partner_list" %}">Partner Profile's</a>
         <a href="#">Profile</a>
-        <a href="#">Logout</a>
+        <a href="{% url "alogout" %}">Logout</a>
     </div>
 
     

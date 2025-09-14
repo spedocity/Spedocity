@@ -8,4 +8,6 @@ urlpatterns = [
     path('customers/', views.customer_list_view, name='customer_list'),
     path('partner-list/', views.partner_list, name='partner_list'),
     path('partner-details/<int:partner_id>/', views.partner_details_view, name='partner_details'),
+    path('alogin',views.alogin,name='alogin'),
+    path('alogout',views.alogout_view,name='alogout')
 ]

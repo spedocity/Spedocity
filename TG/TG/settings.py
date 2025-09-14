@@ -77,6 +77,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'customer.context_processors.customer_profile',
                 'vparnter.context_processors.partner_profile_picture',
+                'Myadmin.context_processors.employee_info',
             ],
         },
     },
@@ -94,7 +95,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'TG',
         'USER': 'postgres',
-        'PASSWORD': 'Akhi@14',
+        'PASSWORD': 'Root',
         'HOST': 'localhost',
         'PORT': '5432',
     }

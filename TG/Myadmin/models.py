@@ -3,14 +3,7 @@ from django.contrib.auth.hashers import make_password
 from django.core.validators import RegexValidator
 
 class Employee(models.Model):
-    # Validator for employee_id to ensure correct format
-    employee_id_validator = RegexValidator(
-        regex=r'^EHASCD[A-Z]{3}$',
-        message='Employee ID must be in the format EHASCDDXXX'
-    )
-    
-    # Employee Details
-    employee_id = models.CharField(max_length=12, unique=True, validators=[employee_id_validator])  # Format: EHASCDDXXX
+    employee_id = models.CharField(max_length=12, unique=True)  # Format: EHASCDDXXX
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=15, unique=True)
